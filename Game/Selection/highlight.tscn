@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Game/Tiles/low_reso_tiles.png" type="Texture" id=1]
+
+[sub_resource type="ImageTexture" id=1]
+flags = 0
+flags = 0
+
+[node name="Selected" type="Sprite"]
+texture = SubResource( 1 )
+region_enabled = true
+
+[node name="low_reso_tiles" type="Sprite" parent="."]
+position = Vector2( -0.025, 0 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 224, 0, 32, 32 )

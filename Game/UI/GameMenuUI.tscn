@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Game/UI/game_menu.gd" type="Script" id=2]
+
+[node name="GameMenuUI" type="PopupDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -125.0
+margin_top = -150.0
+margin_right = 125.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 230.0
+margin_bottom = 134.0
+custom_constants/separation = 8
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_right = 230.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+text = "Menu"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 46.0
+margin_right = 230.0
+margin_bottom = 84.0
+text = "Main menu"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 230.0
+margin_bottom = 130.0
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

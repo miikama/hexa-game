@@ -1,0 +1,122 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Game/UI/wave.png" type="Texture" id=3]
+[ext_resource path="res://Game/UI/menu-lines.png" type="Texture" id=4]
+[ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=5]
+[ext_resource path="res://Game/UI/status_ui.gd" type="Script" id=6]
+[ext_resource path="res://Game/UI/rock.png" type="Texture" id=7]
+
+[node name="StatusUI" type="Control"]
+anchor_right = 1.0
+margin_bottom = 45.0
+theme = ExtResource( 5 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+water_label = NodePath("HBoxContainer/CenterContainer4/WaterLabel")
+rock_label = NodePath("HBoxContainer/CenterContainer/RockLabel")
+
+[node name="ColorRect" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 40 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer3" type="CenterContainer" parent="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer3"]
+margin_left = 7.0
+margin_top = 10.0
+margin_right = 32.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 25, 25 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+
+[node name="CenterContainer4" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 44.0
+margin_right = 104.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 30, 0 )
+
+[node name="WaterLabel" type="Label" parent="HBoxContainer/CenterContainer4"]
+margin_top = 3.0
+margin_right = 60.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 60, 30 )
+size_flags_vertical = 5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 108.0
+margin_right = 148.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer2"]
+margin_left = 7.0
+margin_top = 10.0
+margin_right = 32.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 25, 25 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 152.0
+margin_right = 212.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 30, 0 )
+
+[node name="RockLabel" type="Label" parent="HBoxContainer/CenterContainer"]
+margin_top = 3.0
+margin_right = 60.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 60, 30 )
+size_flags_vertical = 5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer3" type="CenterContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -45.0
+margin_bottom = 45.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="CenterContainer3"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 40, 40 )
+theme = ExtResource( 5 )
+icon = ExtResource( 4 )
+flat = true
+expand_icon = true
+
+[connection signal="pressed" from="CenterContainer3/Button" to="." method="_on_Button_pressed"]
