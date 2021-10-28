@@ -2,12 +2,12 @@ extends Node
 
 class_name Player
 
+var player_name
+var player_id
 var water_amount = 0
 var rock_amount = 100
 
 var pump_resource = preload("res://Game/Buildings/Pump/Pump.tscn")
-
-var owned_hexes = []
 
 func _ready():
 

@@ -8,17 +8,11 @@ const tile_screen = preload("res://Game/Map/Hexamap.tscn")
 func _ready():
 	pass # Replace with function body.
 
-
-
 func _on_Button_pressed():
-	get_parent().add_child(tile_screen.instance())
-	queue_free()
-
+	ScreenManager.change_screen(ScreenManager.GAME)
 
 func _on_Button2_pressed():
-	get_parent().add_child(option_screen.instance())
-	queue_free()
-
-
+	ScreenManager.change_screen(ScreenManager.OPTIONS)
+	
 func _on_Button3_pressed():
 	get_tree().quit()

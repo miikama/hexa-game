@@ -50,7 +50,8 @@ run/main_scene="res://Menu/MainMenu.tscn"
 [autoload]
 
 GameEvents="*res://Game/game_events.gd"
-Game="*res://Game/game.gd"
+ScreenManager="*res://Menu/ScreenManager.tscn"
+GameState="*res://Game/game_state.gd"
 
 [display]
 

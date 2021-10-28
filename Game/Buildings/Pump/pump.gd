@@ -12,6 +12,7 @@ func _ready():
 	pump_timer.start()
 	
 func _on_pump_tick():
-	GameEvents.emit_signal("water_pumped", pump_effiency)
+	if GameState.running:
+		GameEvents.emit_signal("water_pumped", pump_effiency)
 	
 	

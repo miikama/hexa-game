@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Menu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font_open_sans_medium.tres" type="DynamicFont" id=2]
 [ext_resource path="res://fonts/static/OpenSans/OpenSans-Medium.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -15,6 +16,7 @@ font_data = ExtResource( 3 )
 [node name="MarginContainer" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 4 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -31,9 +33,9 @@ margin_bottom = 600.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 363.0
-margin_top = 122.0
+margin_top = 131.0
 margin_right = 660.0
-margin_bottom = 478.0
+margin_bottom = 469.0
 custom_constants/separation = 75
 
 [node name="CenterContainer" type="CenterContainer" parent="CenterContainer/VBoxContainer"]
@@ -52,24 +54,24 @@ text = "PumpHex"
 [node name="CenterContainer2" type="CenterContainer" parent="CenterContainer/VBoxContainer"]
 margin_top = 163.0
 margin_right = 297.0
-margin_bottom = 356.0
+margin_bottom = 338.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/CenterContainer2"]
-margin_left = 82.0
-margin_right = 214.0
-margin_bottom = 193.0
+margin_left = 88.0
+margin_right = 208.0
+margin_bottom = 175.0
 custom_constants/separation = 20
 
 [node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer"]
-margin_right = 132.0
-margin_bottom = 51.0
+margin_right = 120.0
+margin_bottom = 45.0
 custom_fonts/font = SubResource( 2 )
 text = "Play"
 
 [node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer"]
-margin_top = 71.0
-margin_right = 132.0
-margin_bottom = 122.0
+margin_top = 65.0
+margin_right = 120.0
+margin_bottom = 110.0
 custom_fonts/font = ExtResource( 2 )
 text = "Options"
 __meta__ = {
@@ -77,9 +79,9 @@ __meta__ = {
 }
 
 [node name="ExitButton" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer"]
-margin_top = 142.0
-margin_right = 132.0
-margin_bottom = 193.0
+margin_top = 130.0
+margin_right = 120.0
+margin_bottom = 175.0
 custom_fonts/font = ExtResource( 2 )
 text = "Exit"
 __meta__ = {

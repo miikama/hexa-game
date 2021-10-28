@@ -3,6 +3,8 @@ extends Node
 signal quit_to_main_menu
 signal quit_to_desktop
 
+signal player_won
+
 signal tile_selected
 
 signal water_pumped

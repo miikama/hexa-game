@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Game/Map/Camera2D.gd" type="Script" id=1]
 [ext_resource path="res://Game/Tiles/hexas.tres" type="TileSet" id=2]
 [ext_resource path="res://Game/Map/tiling.gd" type="Script" id=3]
 [ext_resource path="res://Game/UI/HeaderUI.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Game/Map/WorldBuilding.gd" type="Script" id=6]
+[ext_resource path="res://Game/Selection/highlight.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Game/game.gd" type="Script" id=6]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -43,7 +44,7 @@ shader = SubResource( 1 )
 shader_param/border_width = 1.0
 shader_param/border_color = Color( 0.227451, 0.137255, 0.137255, 1 )
 
-[node name="Root" type="Node2D"]
+[node name="Game" type="Node2D"]
 script = ExtResource( 6 )
 ground_tilemap = NodePath("Map")
 
@@ -53,7 +54,7 @@ tile_set = ExtResource( 2 )
 cell_size = Vector2( 120, 104 )
 cell_half_offset = 0
 format = 1
-tile_data = PoolIntArray( 2, 2, 0, 3, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 3, 0, 131078, 3, 0, 131079, 3, 0, 131080, 3, 0, 131081, 3, 0, 196608, 0, 0, 196609, 3, 0, 196610, 3, 0, 196611, 3, 0, 196612, 0, 0, 196613, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0 )
+tile_data = PoolIntArray( 2, 2, 0, 3, 3, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 131073, 4, 0, 131074, 4, 0, 131075, 4, 0, 131076, 4, 0, 131077, 3, 0, 131078, 3, 0, 196608, 0, 0, 196609, 3, 0, 196610, 3, 0, 196611, 3, 0, 196612, 0, 0, 196613, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0 )
 script = ExtResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -74,3 +75,6 @@ __meta__ = {
 }
 
 [node name="UIController" parent="." instance=ExtResource( 4 )]
+
+[node name="Highlight" parent="." instance=ExtResource( 5 )]
+ground_tilemap = NodePath("../Map")

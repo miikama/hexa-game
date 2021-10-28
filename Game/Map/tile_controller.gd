@@ -3,7 +3,7 @@ extends Node2D
 class_name TileController
 
 # in ms
-export(float) var update_interval = 2000
+export(float) var update_interval = 200
 
 var tile_cell
 var tile_map
@@ -30,15 +30,7 @@ func start_growing():
 	
 	last_update = OS.get_ticks_msec()
 
-func get_tile_level(cell):
-	
-	var value = tile_map.get_cellv(cell)
 
-	if value < 0:
-		return -1
-	
-	# which value is the current tile in the list of levels
-	return tile_map.tile_levels.find(value)
 	
 func upgrade_tile(cell, tile_level):
 	# should one update tiles
@@ -46,10 +38,10 @@ func upgrade_tile(cell, tile_level):
 		return
 	
 	if OS.get_ticks_msec() - last_update > update_interval:
-		tile_map.set_cellv(tile_cell, tile_map.tile_levels[tile_level+1])
-		tile_map.update_bitmask_area(tile_cell)
-		last_update = OS.get_ticks_msec()
-		tile_level += 1
+		var old_level = tile_level
+		tile_level = tile_map.change_tile_level(cell, tile_level + 1)
+		if tile_level != old_level:
+			last_update = OS.get_ticks_msec()
 		
 func spread_green(cell, target_tiles):
 	
@@ -72,7 +64,7 @@ func spread_green(cell, target_tiles):
 
 func _on_tile_update():
 		
-	tile_level = get_tile_level(tile_cell)
+	tile_level = tile_map.get_tile_level(tile_cell)
 	if tile_level < 0:
 		print("Incorrect tile in _on_tile_update()")
 		return

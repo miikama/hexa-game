@@ -4,7 +4,7 @@ class_name Tiling
 
 onready var center = tile_set.tile_get_texture(0).get_size() / 2
 
-const MAP_SIZE = Vector2(60,60)
+const MAP_SIZE = Vector2(8,8)
 
 const GROUND_TILE = 0
 const GROUND_1 = 1
@@ -20,35 +20,35 @@ const total_height = tile_angle_height * 2 + tile_wall_height
 
 var tile_controller = preload("res://Game/Map/tile_controller.tscn")
 
+var free_tiles = {}
 var controllers = []
-
 
 func _ready():
 	make_map()
 	init_tile_controllers()
 	GameEvents.connect("spread_to_tile", self, "_on_tile_spread")
+
 	
 func make_map():
 	for x in MAP_SIZE.x:
 		for y in MAP_SIZE.y:
 			self.set_cell(x,y, self.GROUND_TILE)
 
-
 func init_tile_controllers():
 	
 	for i in range(MAP_SIZE.x):
 		var inner_container = []
 		for j in range(MAP_SIZE.y):
-			if self.get_cellv(Vector2(i,j)) >= 0:
-				var controller = add_controller(Vector2(i,j))
+			var cell = Vector2(i,j)
+			if self.get_cellv(cell) >= 0:
+				var controller = add_controller(cell)
 				inner_container.append(controller)
+				free_tiles[cell] = GROUND_TILE
 			else:
 				break
 		controllers.append(inner_container)
 		
 func get_controller_for_cell(cell: Vector2) -> TileController:
-	
-	print("controllers size (", controllers.size(), ", ", controllers[0].size(), ")")
 	
 	if cell.x < 0 or cell.y < 0 or cell.x >= controllers.size() or cell.y >= controllers[0].size():
 		print("querying invalid controller for cell: ", cell)
@@ -63,6 +63,10 @@ func _on_tile_spread(cell):
 		return
 		
 	controller.start_growing()
+	free_tiles.erase(cell)
+	if free_tiles.size() == 0:
+#		GameEvents.emit_signal("player_won", Game.players[0])
+		print("skipping game end")
 
 func _unhandled_input(event):
 	
@@ -81,10 +85,25 @@ func add_controller(cell: Vector2):
 	controller.tile_level = 0
 	add_child(controller)
 	return controller
-	print("adding controller to, ", cell)
 	
+func get_tile_level(cell):
+	
+	var value = self.get_cellv(cell)
 
-		
+	if value < 0:
+		return -1
+	
+	# which value is the current tile in the list of levels
+	return self.tile_levels.find(value)
+	
+func change_tile_level(cell, new_level):
+	var current_level = get_tile_level(cell)
+	if GameState.running:
+		self.set_cellv(cell, self.tile_levels[new_level])
+		self.update_bitmask_area(cell)
+		return new_level
+	return current_level
+
 func get_neighbours_for_cell(cell):
 	
 	var even_offsets = [
@@ -113,8 +132,7 @@ func get_neighbours_for_cell(cell):
 			neighbours.append(target_cell)
 			
 	return neighbours
-		 
-		
+
 func get_cell_loc_from_world(mouse_pos):
 	var mouse_cell = self.get_cell_from_mouse(get_global_mouse_position())
 	var cell_location = self.map_to_world(mouse_cell)
@@ -146,5 +164,5 @@ func get_cell_from_mouse(mouse_pos):
 #
 	return cell
 	
-	
+
 	
