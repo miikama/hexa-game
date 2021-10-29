@@ -14,6 +14,8 @@ var tile_level = 0
 var growing = false
 var spread = false
 
+var player: Player
+
 func _ready():
 	last_update = OS.get_ticks_msec()
 	
@@ -29,8 +31,11 @@ func start_growing():
 	update_timer.start()
 	
 	last_update = OS.get_ticks_msec()
+	
+	growing = true
 
-
+func assign_player(player: Player):
+	self.player = player
 	
 func upgrade_tile(cell, tile_level):
 	# should one update tiles
@@ -58,7 +63,7 @@ func spread_green(cell, target_tiles):
 	# spread to each neighbouring cell
 	for target_cell in target_tiles:
 		if tile_map.get_cellv(target_cell) == tile_map.GROUND_TILE:
-			GameEvents.emit_signal("spread_to_tile", target_cell)
+			GameEvents.emit_signal("spread_to_tile", target_cell, player)
 			
 	spread = true
 

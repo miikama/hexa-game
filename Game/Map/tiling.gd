@@ -36,42 +36,43 @@ func make_map():
 
 func init_tile_controllers():
 	
+	# NOTE: only supports continuous rectangular grids
 	for i in range(MAP_SIZE.x):
-		var inner_container = []
 		for j in range(MAP_SIZE.y):
 			var cell = Vector2(i,j)
 			if self.get_cellv(cell) >= 0:
 				var controller = add_controller(cell)
-				inner_container.append(controller)
+				controllers.append(controller)
 				free_tiles[cell] = GROUND_TILE
 			else:
 				break
-		controllers.append(inner_container)
 		
 func get_controller_for_cell(cell: Vector2) -> TileController:
 	
-	if cell.x < 0 or cell.y < 0 or cell.x >= controllers.size() or cell.y >= controllers[0].size():
+	if cell.x < 0 or cell.y < 0 or  (MAP_SIZE.y * cell.x + cell.y) >= controllers.size():
 		print("querying invalid controller for cell: ", cell)
 		return null
 		
-	return controllers[cell.x][cell.y]
+	return controllers[MAP_SIZE.y * cell.x + cell.y]
 
-func _on_tile_spread(cell):
+func _on_tile_spread(cell: Vector2, player: Player):
 	
 	var controller = get_controller_for_cell(cell)
 	if controller == null:
 		return
-		
+
+	controller.assign_player(player)
+
 	controller.start_growing()
 	free_tiles.erase(cell)
 	if free_tiles.size() == 0:
-#		GameEvents.emit_signal("player_won", Game.players[0])
-		print("skipping game end")
+		print("tiles done")
+		GameEvents.emit_signal("all_tiles_controlled")
 
 func _unhandled_input(event):
 	
 	if event is InputEventMouseButton && event.pressed && event.button_index == BUTTON_LEFT:
-		var cell = get_cell_from_mouse(get_global_mouse_position())
+		var cell = get_cell_from_world_loc(get_global_mouse_position())
 
 func add_controller(cell: Vector2):
 	if self.get_cellv(cell) != self.GROUND_TILE:
@@ -133,15 +134,15 @@ func get_neighbours_for_cell(cell):
 			
 	return neighbours
 
-func get_cell_loc_from_world(mouse_pos):
-	var mouse_cell = self.get_cell_from_mouse(get_global_mouse_position())
-	var cell_location = self.map_to_world(mouse_cell)
+func get_cell_loc_from_world(global_location: Vector2):
+	var cell = self.get_cell_from_world_loc(global_location)
+	var cell_location = self.map_to_world(cell)
 	return cell_location
 	
-func get_cell_from_mouse(mouse_pos):
+func get_cell_from_world_loc(global_location: Vector2):
 	
-	var cell = world_to_map(mouse_pos)
-	var local_mouse_pos = mouse_pos - map_to_world(cell)
+	var cell = world_to_map(global_location)
+	var local_mouse_pos = global_location - map_to_world(cell)
 	
 	var slope = (cell_size.y  *  tile_angle_height / tile_wall_height) / (cell_size.x / 2 )
 	var b = tile_angle_height / tile_wall_height * cell_size.y

@@ -15,3 +15,4 @@ signal rock_level_changed
 signal building_added
 
 signal spread_to_tile
+signal all_tiles_controlled

@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 class_name Player
 
@@ -7,7 +7,6 @@ var player_id
 var water_amount = 0
 var rock_amount = 100
 
-var pump_resource = preload("res://Game/Buildings/Pump/Pump.tscn")
 
 func _ready():
 
@@ -35,16 +34,25 @@ func _on_status_update():
 	GameEvents.emit_signal("rock_level_changed", self.rock_amount)
 
 func _on_water_pumped(amount: float):
-	self.water_amount += amount	
+	self.water_amount += amount
+	
+func build_building(global_location: Vector2):
+	var pump = BuildingManager.pump.instance()
+	if rock_amount >= pump.cost:
+		rock_amount -= pump.cost
+		pump.player = self
+		print("building at: ", global_location)
+		GameEvents.emit_signal("building_added", pump, global_location)
+	else:
+		pump.queue_free()
 
-func _unhandled_input(event):	
+func _unhandled_input(event):
+
+	if self.player_id != 1:
+		return
+
 	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
-		
-		var pump = pump_resource.instance()
-		if rock_amount >= pump.cost:
-			rock_amount -= pump.cost
-			GameEvents.emit_signal("building_added", pump)
-		else:
-			pump.queue_free()
+		build_building(get_global_mouse_position())
+
 
 

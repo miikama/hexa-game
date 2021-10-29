@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Game/Buildings/building.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Game/Player/player.gd"
@@ -52,6 +52,7 @@ run/main_scene="res://Menu/MainMenu.tscn"
 GameEvents="*res://Game/game_events.gd"
 ScreenManager="*res://Menu/ScreenManager.tscn"
 GameState="*res://Game/game_state.gd"
+BuildingManager="*res://Game/Buildings/building_manager.gd"
 
 [display]
 
