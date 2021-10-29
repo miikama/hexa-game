@@ -6,8 +6,8 @@ export(NodePath) onready var ground_tilemap = get_node(ground_tilemap) as Tiling
 
 func _ready():
 	
-	make_player("player1", 1)
-	make_player("player2", 2)
+	make_player("player1", 1, Color(0.2, 0.2, 0.8))
+	make_player("player2", 2,  Color(0.8, 0.2, 0.2))
 	
 	var status_timer: Timer = Timer.new()
 	status_timer.set_wait_time(1)
@@ -22,22 +22,24 @@ func _ready():
 	GameState.start()
 	
 func _on_first_build():
-	print("making first build")
 	players[-1].build_building(Vector2(100,100))
 	
-func make_player(name, id):
+func make_player(name, id, color):
 	var player = Player.new()
 	player.player_name = name
 	player.player_id = id
+	player.color = color
 	add_child(player)
 	players.append(player)
 	
 func _on_player_won():
 	var winner = compute_winner()
-	print("player won: ", winner)
-	if winner:
-		GameEvents.emit_signal("player_won", winner)
-		GameState.pause()
+	if winner == null:
+		print("No winner even though player won!")
+		return
+		
+	GameEvents.emit_signal("player_won", winner)
+	GameState.pause()
 	
 func compute_winner():
 
@@ -56,7 +58,6 @@ func compute_winner():
 					most_tiles = tile_owning_players[controller.player]
 
 	if winner == null:
-		print("nobody won")
 		return
 
 	return winner
@@ -71,7 +72,6 @@ func _on_building_added(building: Building, global_location: Vector2):
 	offset.y += ground_tilemap.cell_size.y / 4
 	building.global_position = ground_tilemap.get_cell_loc_from_world(global_location) + offset
 	add_child(building)
-	print("building_added, buildign player: ", building.player)
 	ground_tilemap._on_tile_spread(
 		ground_tilemap.get_cell_from_world_loc(global_location), building.player)
 	

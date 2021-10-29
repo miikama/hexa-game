@@ -16,6 +16,8 @@ var spread = false
 
 var player: Player
 
+export(NodePath) onready var area_highlight = get_node(area_highlight) as Sprite
+
 func _ready():
 	last_update = OS.get_ticks_msec()
 	
@@ -36,6 +38,8 @@ func start_growing():
 
 func assign_player(player: Player):
 	self.player = player
+	area_highlight.visible = true
+	area_highlight.material.set_shader_param("color", player.color)
 	
 func upgrade_tile(cell, tile_level):
 	# should one update tiles

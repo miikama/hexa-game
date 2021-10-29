@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/highlight_hexa.png-67eb3e28cb231d0a85e0d0fd3c86f607.stex"
+path="res://.import/custom_tiles.png-91ec4b83bb19a116e3284ece81051e8f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/Map/highlight_hexa.png"
-dest_files=[ "res://.import/highlight_hexa.png-67eb3e28cb231d0a85e0d0fd3c86f607.stex" ]
+source_file="res://tilemaps/Hexa/custom_tiles.png"
+dest_files=[ "res://.import/custom_tiles.png-91ec4b83bb19a116e3284ece81051e8f.stex" ]
 
 [params]
 

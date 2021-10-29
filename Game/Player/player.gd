@@ -6,7 +6,7 @@ var player_name
 var player_id
 var water_amount = 0
 var rock_amount = 100
-
+var color: Color
 
 func _ready():
 

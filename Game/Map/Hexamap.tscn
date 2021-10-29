@@ -36,7 +36,7 @@ void fragment() {
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 	
-	COLOR = mix(col, border_color, maxa-mina);
+	COLOR = mix(col, border_color, maxa-mina);	
 }"
 
 [sub_resource type="ShaderMaterial" id=2]

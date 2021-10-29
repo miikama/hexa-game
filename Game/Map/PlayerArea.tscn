@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Game/Map/highlight_hexa.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+uniform float slope;
+uniform float offset;
+
+void fragment()
+{
+	vec4 col = texture(TEXTURE, UV);
+	vec2 ps = TEXTURE_PIXEL_SIZE;
+	
+	COLOR.rgb = color.rgb;
+	
+	vec2 center = vec2(0.5, 0.5);
+	float dist = distance(center, UV);
+	float coef = max(0, slope * dist + offset);
+	COLOR.a = coef * col.a;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/color = Color( 0.796078, 0.113725, 0.113725, 1 )
+shader_param/slope = 3.0
+shader_param/offset = -1.0
+
+[node name="PlayerArea" type="Sprite"]
+material = SubResource( 2 )
+texture = ExtResource( 1 )
+centered = false
