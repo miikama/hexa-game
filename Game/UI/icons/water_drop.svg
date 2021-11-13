@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="water_drop.svg"
+   inkscape:version="1.1.1 (eb90963e84, 2021-10-02)"
+   inkscape:export-filename="/home/miika/snap/inkscape/9256/bitmap.png"
+   inkscape:export-xdpi="40.998718"
+   inkscape:export-ydpi="40.998718"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showborder="false"
+     inkscape:zoom="0.73228114"
+     inkscape:cx="-163.18869"
+     inkscape:cy="84.666935"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     inkscape:window-x="1987"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path2342" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path846"
+       style="fill:#32d3ff;fill-opacity:1;stroke:#0022a4;stroke-width:6.588125;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 12.908547,76.83772 c 1.043807,12.204101 -6.4537034,23.10873 -16.9114918,23.10873 -10.4577882,0 -19.8627102,-9.078832 -18.9355032,-23.286583 0.590393,-9.046691 15.5964172,-32.08246 18.9355032,-35.172676 0.6933124,-0.641638 1.569792,2.895185 3.75942025,7.216056 1.2229037,2.4132 12.55927955,21.2036 13.15207155,28.134473 z"
+       sodipodi:nodetypes="ssssss"
+       inkscape:export-filename="/home/miika/Documents/ohjelmointi/godot-things/Game/UI/icons/water_drop.png"
+       inkscape:export-xdpi="40.998718"
+       inkscape:export-ydpi="40.998718" />
+    <ellipse
+       style="fill:#97e9ff;fill-opacity:1;stroke:none;stroke-width:7.58277;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path7600"
+       cx="1.4380444"
+       cy="79.361496"
+       rx="6.8643656"
+       ry="11.82781"
+       inkscape:export-filename="/home/miika/Documents/ohjelmointi/godot-things/Game/UI/icons/water_drop.png"
+       inkscape:export-xdpi="40.998718"
+       inkscape:export-ydpi="40.998718" />
+  </g>
+</svg>

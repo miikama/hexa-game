@@ -54,6 +54,16 @@ func get_controller_for_cell(cell: Vector2) -> TileController:
 		return null
 		
 	return controllers[MAP_SIZE.y * cell.x + cell.y]
+	
+func determine_cell_water_level(cell):
+	
+	var neighbour_cells = get_neighbours_for_cell(cell)
+	var max_neighbour_level = 0
+	for neighbour in neighbour_cells:
+		var controller = get_controller_for_cell(neighbour)
+		max_neighbour_level = max(max_neighbour_level, controller.water_level)
+		
+	return max(max_neighbour_level - 1, 0)
 
 func _on_tile_spread(cell: Vector2, player: Player):
 	
@@ -61,7 +71,12 @@ func _on_tile_spread(cell: Vector2, player: Player):
 	if controller == null:
 		return
 
+	if controller.player != null:
+		return
+
 	controller.assign_player(player)
+	
+	controller.set_water_level(determine_cell_water_level(cell))
 
 	controller.start_growing()
 	free_tiles.erase(cell)

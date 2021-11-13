@@ -1,7 +1,35 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Game/Map/tile_controller.gd" type="Script" id=1]
 [ext_resource path="res://Game/Map/PlayerArea.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Game/UI/icons/water_drop.png" type="Texture" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color: hint_color;
+uniform float slope;
+uniform float offset;
+
+void fragment()
+{
+	vec4 col = texture(TEXTURE, UV);
+	vec2 ps = TEXTURE_PIXEL_SIZE;
+	
+	COLOR.rgb = color.rgb;
+	
+	vec2 center = vec2(0.5, 0.5);
+	float dist = distance(center, UV);
+	float coef = max(0, slope * dist + offset);
+	COLOR.a = coef * col.a;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/color = Color( 0.796078, 0.113725, 0.113725, 1 )
+shader_param/slope = 3.0
+shader_param/offset = -1.0
 
 [node name="TileController" type="Node2D"]
 script = ExtResource( 1 )
@@ -9,3 +37,22 @@ area_highlight = NodePath("PlayerArea")
 
 [node name="PlayerArea" parent="." instance=ExtResource( 2 )]
 visible = false
+material = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 46.5212, 112.48 )
+scale = Vector2( 0.176861, 0.176861 )
+texture = ExtResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 61.0382, 112.48 )
+scale = Vector2( 0.177, 0.177 )
+texture = ExtResource( 3 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 75.9807, 112.629 )
+scale = Vector2( 0.177, 0.177 )
+texture = ExtResource( 3 )

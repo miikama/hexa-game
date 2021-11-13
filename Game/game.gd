@@ -68,11 +68,20 @@ func _unhandled_input(event):
 		GameEvents.emit_signal("tile_selected", tile_pos)
 	
 func _on_building_added(building: Building, global_location: Vector2):	
+	
+	# setting up building
 	var offset = ground_tilemap.cell_size / 2
 	offset.y += ground_tilemap.cell_size.y / 4
 	building.global_position = ground_tilemap.get_cell_loc_from_world(global_location) + offset
 	add_child(building)
+	
+	# starting the spreading
 	ground_tilemap._on_tile_spread(
 		ground_tilemap.get_cell_from_world_loc(global_location), building.player)
+		
+	# setting up water level
+	var cell = ground_tilemap.get_cell_from_world_loc(global_location)
+	var controller =  ground_tilemap.get_controller_for_cell(cell)
+	controller.set_water_level(controller.water_level + building.water_production)
 	
 	

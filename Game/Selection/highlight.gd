@@ -12,6 +12,12 @@ func _ready():
 	
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
+		var cell = ground_tilemap.get_cell_from_world_loc(get_global_mouse_position())
+		if ground_tilemap.get_cellv(cell) < 0:
+			self.visible = false
+			return
+		else:
+			self.visible = true
 		highlight.global_position = ground_tilemap.get_cell_loc_from_world(get_global_mouse_position())
 
 func make_highlight():

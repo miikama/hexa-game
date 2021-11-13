@@ -3,7 +3,9 @@ extends Node2D
 class_name TileController
 
 # in ms
-export(float) var update_interval = 200
+export(float) var update_interval = 500
+export(float) var water_level_effect = 500
+export(float) var max_water_level = 3
 
 var tile_cell
 var tile_map
@@ -11,15 +13,24 @@ var tile_map
 var last_update
 var tile_level = 0
 
+var water_level = 0
+
 var growing = false
 var spread = false
 
+
 var player: Player
+var building: Building
+
+var droplets = []
 
 export(NodePath) onready var area_highlight = get_node(area_highlight) as Sprite
 
 func _ready():
 	last_update = OS.get_ticks_msec()
+	
+	droplets = [get_node("Sprite"), get_node("Sprite2"), get_node("Sprite3")]
+
 	
 func start_growing():
 	
@@ -41,24 +52,36 @@ func assign_player(player: Player):
 	area_highlight.visible = true
 	area_highlight.material.set_shader_param("color", player.color)
 	
+func set_water_level(level):
+	self.water_level = level
+	for i in range(droplets.size()):
+		if i < level:
+			droplets[i].visible = true
+		else:
+			droplets[i].visible = false
+	
 func upgrade_tile(cell, tile_level):
+
 	# should one update tiles
-	if tile_level >= tile_map.tile_levels.size() -1:
+	# if tile_level >= tile_map.tile_levels.size() -1:
+	if self.tile_level >= self.water_level:
 		return
 	
-	if OS.get_ticks_msec() - last_update > update_interval:
+	var water_level_delay = (max_water_level- self.water_level) * self.water_level_effect
+	if OS.get_ticks_msec() - last_update > (update_interval + water_level_delay):
 		var old_level = tile_level
 		tile_level = tile_map.change_tile_level(cell, tile_level + 1)
 		if tile_level != old_level:
 			last_update = OS.get_ticks_msec()
-		
+
 func spread_green(cell, target_tiles):
 	
 	if spread:
 		return
 	
-	# only spread from totally developed areas
-	if tile_map.get_cellv(cell) != tile_map.tile_levels[-1]:
+	# only spread from developed areas
+	# tile_map.get_cellv(cell) == tile_map.GROUND_TILE:
+	if self.tile_level < self.water_level or self.tile_level ==  0:
 		return
 		
 	if OS.get_ticks_msec() - last_update < update_interval:

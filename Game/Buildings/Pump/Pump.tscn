@@ -7,6 +7,7 @@
 z_index = 4
 script = ExtResource( 2 )
 cost = 100
+water_production = 3
 
 [node name="low_reso_tiles" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
