@@ -7,6 +7,7 @@ export var pump_effiency = 1
 func _ready():	
 	var pump_timer: Timer = Timer.new()
 	pump_timer.set_wait_time(1)
+	pump_timer.one_shot = true
 	pump_timer.connect("timeout", self, "_on_pump_tick")
 	add_child(pump_timer)
 	pump_timer.start()

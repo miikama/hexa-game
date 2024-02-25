@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://Game/Buildings/building.gd"
 }, {
 "base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://Game/game.gd"
+}, {
+"base": "Node2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Game/Player/player.gd"
@@ -36,6 +41,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Building": "",
+"Game": "",
 "Player": "",
 "Pump": "",
 "TileController": "",

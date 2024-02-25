@@ -35,24 +35,6 @@ func _on_status_update():
 
 func _on_water_pumped(amount: float):
 	self.water_amount += amount
-	
-func build_building(global_location: Vector2):
-	var pump = BuildingManager.pump.instance()
-	if rock_amount >= pump.cost:
-		rock_amount -= pump.cost
-		pump.player = self
-		print("building at: ", global_location)
-		GameEvents.emit_signal("building_added", pump, global_location)
-	else:
-		pump.queue_free()
-
-func _unhandled_input(event):
-
-	if self.player_id != 1:
-		return
-
-	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
-		build_building(get_global_mouse_position())
 
 
 

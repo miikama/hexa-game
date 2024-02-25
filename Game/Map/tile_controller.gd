@@ -8,19 +8,19 @@ export(float) var water_level_effect = 500
 export(float) var max_water_level = 3
 
 var tile_cell
-var tile_map
 
 var last_update
 var tile_level = 0
+var level_changes= [0, 25, 50]
 
 var water_level = 0
 
 var growing = false
 var spread = false
 
-
-var player: Player
 var building: Building
+var influence = 0
+var controlling_player_id = 0
 
 var droplets = []
 
@@ -31,26 +31,40 @@ func _ready():
 	
 	droplets = [get_node("Sprite"), get_node("Sprite2"), get_node("Sprite3")]
 
+func total_influence(player_id: int) -> float:
+	"""If the player is controlling player, return positive"""
+	if player_id == self.controlling_player_id:
+		return self.get_influence_income()
+	return 0.0
 	
-func start_growing():
-	
-	if growing:
-		return
+func increase_influence(player_id: int, influence_increase: float):
+	"""Increase influence of a player on the tile,
+	possibly changing ownership"""
+	if player_id == self.controlling_player_id:
+		self.influence = min(100.0, self.influence + influence_increase)
+	else:
+		self.influence -= influence_increase
 		
-	var update_timer: Timer = Timer.new()
-	update_timer.set_wait_time(0.1)
-	update_timer.connect("timeout", self, "_on_tile_update")
-	add_child(update_timer)
-	update_timer.start()
+		# if ownership flips
+		if self.influence < 0:
+			self.influence = -self.influence
+			self.controlling_player_id = player_id
 	
-	last_update = OS.get_ticks_msec()
+func get_influence_income():
+	"""Always positive"""
+	var tile_influence = 0
 	
-	growing = true
+	if self.influence > 50:
+		tile_influence += 2
 
-func assign_player(player: Player):
-	self.player = player
+	if self.building:
+		tile_influence += self.building.get_influence_income()
+
+	return tile_influence
+
+func assign_player(player_color: Color):
 	area_highlight.visible = true
-	area_highlight.material.set_shader_param("color", player.color)
+	area_highlight.material.set_shader_param("color", player_color)
 	
 func set_water_level(level):
 	self.water_level = level
@@ -59,20 +73,6 @@ func set_water_level(level):
 			droplets[i].visible = true
 		else:
 			droplets[i].visible = false
-	
-func upgrade_tile(cell, tile_level):
-
-	# should one update tiles
-	# if tile_level >= tile_map.tile_levels.size() -1:
-	if self.tile_level >= self.water_level:
-		return
-	
-	var water_level_delay = (max_water_level- self.water_level) * self.water_level_effect
-	if OS.get_ticks_msec() - last_update > (update_interval + water_level_delay):
-		var old_level = tile_level
-		tile_level = tile_map.change_tile_level(cell, tile_level + 1)
-		if tile_level != old_level:
-			last_update = OS.get_ticks_msec()
 
 func spread_green(cell, target_tiles):
 	
@@ -88,22 +88,16 @@ func spread_green(cell, target_tiles):
 		return
 	
 	# spread to each neighbouring cell
-	for target_cell in target_tiles:
-		if tile_map.get_cellv(target_cell) == tile_map.GROUND_TILE:
-			GameEvents.emit_signal("spread_to_tile", target_cell, player)
+	#for target_cell in target_tiles:
+		#if tile_map.get_cellv(target_cell) == tile_map.GROUND_TILE:
+			#GameEvents.emit_signal("spread_to_tile", target_cell, player)
 			
 	spread = true
-
-func _on_tile_update():
-		
-	tile_level = tile_map.get_tile_level(tile_cell)
-	if tile_level < 0:
-		print("Incorrect tile in _on_tile_update()")
-		return
 	
-	upgrade_tile(tile_cell, tile_level)
-
-	spread_green(tile_cell, tile_map.get_neighbours_for_cell(tile_cell))
-	
-	
+func get_tile_level():
+	var tile_level = 0
+	for border in self.level_changes:
+		if self.influence > border:
+			tile_level += 1
+	return tile_level	
 	

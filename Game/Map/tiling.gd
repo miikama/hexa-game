@@ -26,8 +26,6 @@ var controllers = []
 func _ready():
 	make_map()
 	init_tile_controllers()
-	GameEvents.connect("spread_to_tile", self, "_on_tile_spread")
-
 	
 func make_map():
 	for x in MAP_SIZE.x:
@@ -46,6 +44,13 @@ func init_tile_controllers():
 				free_tiles[cell] = GROUND_TILE
 			else:
 				break
+				
+
+func tile_update():	
+	
+	for controller in self.controllers:
+		var tile_level = controller.get_tile_level()
+		self.change_tile_level(controller.tile_cell, tile_level)
 		
 func get_controller_for_cell(cell: Vector2) -> TileController:
 	
@@ -54,6 +59,10 @@ func get_controller_for_cell(cell: Vector2) -> TileController:
 		return null
 		
 	return controllers[MAP_SIZE.y * cell.x + cell.y]
+	
+func get_controller_for_location(global_location: Vector2) -> TileController:
+	var cell = self.get_cell_from_world_loc(global_location)
+	return self.get_controller_for_cell(cell)
 	
 func determine_cell_water_level(cell):
 	
@@ -64,25 +73,6 @@ func determine_cell_water_level(cell):
 		max_neighbour_level = max(max_neighbour_level, controller.water_level)
 		
 	return max(max_neighbour_level - 1, 0)
-
-func _on_tile_spread(cell: Vector2, player: Player):
-	
-	var controller = get_controller_for_cell(cell)
-	if controller == null:
-		return
-
-	if controller.player != null:
-		return
-
-	controller.assign_player(player)
-	
-	controller.set_water_level(determine_cell_water_level(cell))
-
-	controller.start_growing()
-	free_tiles.erase(cell)
-	if free_tiles.size() == 0:
-		print("tiles done")
-		GameEvents.emit_signal("all_tiles_controlled")
 
 func _unhandled_input(event):
 	
@@ -97,7 +87,6 @@ func add_controller(cell: Vector2):
 	var controller = tile_controller.instance()
 	controller.tile_cell = cell
 	controller.global_position = location
-	controller.tile_map = self
 	controller.tile_level = 0
 	add_child(controller)
 	return controller
