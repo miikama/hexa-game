@@ -25,7 +25,6 @@ func _ready():
 	game_timer.start()
 	
 	GameEvents.connect("all_tiles_controlled", self, "_on_player_won")
-	GameEvents.connect("building_added", self, "_on_building_added")
 	
 	GameState.start()
 	
@@ -38,31 +37,39 @@ func debug_setup():
 	status_timer.connect("timeout", self, "_on_first_build")
 	add_child(status_timer)
 	status_timer.start()
+	
+	GameEvents.emit_signal("rock_level_changed", self.players[0].rock_amount)
 
 func _on_first_build():
 	self.build_building(self.players[-1], Vector2(100,100))
 	self.spread_influence(self.players[-1], Vector2(100,100))
 	
-func update():
-	"""Game update loop calls this function periodically"""
+func _process(delta: float):
+	"""Game logic and UI update"""
 	
 	for player in self.players:
 		var income = self.get_influence_income(player)
 		var drain = self.get_influence_drain(player)
 		
-		self.assign_influence(player, 10)
-		
 		if player.player_id == current_player:
 			GameEvents.emit_signal("water_level_changed", income - drain)
 			
-		self.ground_tilemap.tile_update()
+	self.ground_tilemap.tile_update()
+
+	
+func update():
+	"""Game update loop calls this function periodically"""
+	for player in self.players:
+		self.assign_influence(player, 10)	
 
 func build_building(player: Player, global_location: Vector2):
 	var pump = BuildingManager.pump.instance()
 	if player.rock_amount >= pump.cost:
 		player.rock_amount -= pump.cost
-		print("building at: ", global_location)
-		GameEvents.emit_signal("building_added", pump, global_location)
+		build_at_location(pump, global_location)
+		
+		if player.player_id == current_player:
+			GameEvents.emit_signal("rock_level_changed", player.rock_amount)
 	else:
 		pump.queue_free()
 		
@@ -153,11 +160,11 @@ func _unhandled_input(event):
 	# A single click
 	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
 		var position = get_global_mouse_position()
-		self.spread_influence(self.players[0], position)
 		self.build_building(self.players[0], position)
+		self.spread_influence(self.players[0], position)
 	
-func _on_building_added(building: Building, global_location: Vector2):	
-	
+func build_at_location(building: Building, global_location: Vector2):
+
 	# setting up building
 	var offset = ground_tilemap.cell_size / 2
 	offset.y += ground_tilemap.cell_size.y / 4
@@ -167,6 +174,7 @@ func _on_building_added(building: Building, global_location: Vector2):
 	# setting up water level
 	var cell = ground_tilemap.get_cell_from_world_loc(global_location)
 	var controller =  ground_tilemap.get_controller_for_cell(cell)
+	controller.building = building
 	controller.set_water_level(controller.water_level + building.water_production)
 	
 	

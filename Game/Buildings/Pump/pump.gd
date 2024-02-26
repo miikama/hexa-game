@@ -2,18 +2,8 @@ extends Building
 
 class_name Pump
 
-export var pump_effiency = 1
-
-func _ready():	
-	var pump_timer: Timer = Timer.new()
-	pump_timer.set_wait_time(1)
-	pump_timer.one_shot = true
-	pump_timer.connect("timeout", self, "_on_pump_tick")
-	add_child(pump_timer)
-	pump_timer.start()
+export var pump_effiency = 10
 	
-func _on_pump_tick():
-	if GameState.running:
-		GameEvents.emit_signal("water_pumped", pump_effiency)
-	
-	
+func get_influence_income() -> float:
+	"""pump is a positive influencer"""
+	return self.pump_effiency
