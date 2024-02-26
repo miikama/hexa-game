@@ -1,5 +1,6 @@
 extends PopupDialog
 
+
 func _on_MainMenuButton_pressed():
 	GameEvents.emit_signal("quit_to_main_menu")
 

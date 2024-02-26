@@ -12,12 +12,12 @@ const screens = {
 	GAME: "res://Game/Map/Hexamap.tscn",
 }
 
+
 func change_screen(target_screen):
-	
 	if not target_screen in screens:
 		return
-	get_tree().change_scene(screens[target_screen])	
+	get_tree().change_scene(screens[target_screen])
 
-func _ready():	
+
+func _ready():
 	print("started screen manager")
-	

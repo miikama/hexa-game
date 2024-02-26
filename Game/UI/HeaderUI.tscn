@@ -25,3 +25,4 @@ margin_left = -125.0
 margin_top = -75.0
 margin_right = 125.0
 margin_bottom = 75.0
+victory_label = NodePath("")

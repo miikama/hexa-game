@@ -10,3 +10,16 @@ The game map is a hexa-tile based map. Players build water pumps into the dry de
 ![game](graphics/example_game_screen.png)
 
 > DISCLAIMER: this is just a hobby game for testing Godot functionality and is totally incomplete
+
+## Development
+
+set up a pre-commit hook for formatting
+
+```
+python3 -m pip "install gdtoolkit==3.*"
+mv  .git/hooks/pre-commit.sample .git/hooks/pre-commit
+vim .git/hooks/pre-commit
+
+# add the following line
+gdformat $(find . -name '*.gd')
+```
