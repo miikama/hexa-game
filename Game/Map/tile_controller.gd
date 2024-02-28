@@ -25,6 +25,7 @@ var controlling_player_id = 0
 var droplets = []
 
 export(NodePath) onready var area_highlight = get_node(area_highlight) as Sprite
+export(NodePath) onready var info_label = get_node(info_label) as RichTextLabel
 
 
 func _ready():
@@ -48,6 +49,7 @@ func increase_influence(player_id: int, influence_increase: float) -> bool:
 	"""
 	if player_id == self.controlling_player_id:
 		self.influence = min(100.0, self.influence + influence_increase)
+		info_label.text = str(self.influence)
 	else:
 		self.influence -= influence_increase
 
@@ -75,6 +77,10 @@ func get_influence_income():
 func assign_player(player_color: Color):
 	area_highlight.visible = true
 	area_highlight.material.set_shader_param("color", player_color)
+
+	info_label.visible = true
+	info_label.text = str(self.influence)
+	info_label.modulate = player_color
 
 
 func set_water_level(level):
