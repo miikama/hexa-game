@@ -103,7 +103,9 @@ func assign_influence(player, influence: float):
 	"""Go over controllers that we want to increase our influence"""
 
 	for controller in self.influenced_tiles[player.player_id]:
-		controller.increase_influence(player.player_id, influence)
+		var control_flipped = controller.increase_influence(player.player_id, influence)
+		if control_flipped:
+			controller.assign_player(player.color)
 
 
 func spread_influence(player: Player, global_location: Vector2):

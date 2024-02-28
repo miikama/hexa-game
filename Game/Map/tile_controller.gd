@@ -40,9 +40,12 @@ func total_influence(player_id: int) -> float:
 	return 0.0
 
 
-func increase_influence(player_id: int, influence_increase: float):
+func increase_influence(player_id: int, influence_increase: float) -> bool:
 	"""Increase influence of a player on the tile,
-	possibly changing ownership"""
+	possibly changing ownership
+
+	return true if ownership flips
+	"""
 	if player_id == self.controlling_player_id:
 		self.influence = min(100.0, self.influence + influence_increase)
 	else:
@@ -52,6 +55,8 @@ func increase_influence(player_id: int, influence_increase: float):
 		if self.influence < 0:
 			self.influence = -self.influence
 			self.controlling_player_id = player_id
+			return true
+	return false
 
 
 func get_influence_income():
