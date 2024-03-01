@@ -10,6 +10,8 @@ signal tile_selected
 signal water_pumped
 
 signal water_level_changed
+signal expansion_power_changed
+signal total_influence_changed
 signal rock_level_changed
 
 signal building_added

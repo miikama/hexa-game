@@ -19,8 +19,11 @@ var growing = false
 var spread = false
 
 var building: Building
-var influence = 0
+var influence: float = 0
 var controlling_player_id = 0
+
+# How much influence pressure the player_id -> amount of influence
+var player_influence: Dictionary = {}
 
 var droplets = []
 
@@ -34,7 +37,23 @@ func _ready():
 	droplets = [get_node("Sprite"), get_node("Sprite2"), get_node("Sprite3")]
 
 
-func total_influence(player_id: int) -> float:
+func influence_drain(player_id: int) -> float:
+	"""The players are allowed to apply pressure to tiles
+
+	The influence drain depends on the applied pressure
+
+	At 50 strength, the tile does not drain anymore
+	"""
+	if not player_id in player_influence:
+		return 0.0
+
+	if self.influence >= 100:
+		# stop influencing fully controlled tiles
+		player_influence[player_id] = 0
+	return player_influence[player_id]
+
+
+func influence_income(player_id: int) -> float:
 	"""If the player is controlling player, return positive"""
 	if player_id == self.controlling_player_id:
 		return self.get_influence_income()
@@ -59,6 +78,14 @@ func increase_influence(player_id: int, influence_increase: float) -> bool:
 			self.controlling_player_id = player_id
 			return true
 	return false
+
+
+func increase_influence_pressure(player_id: int, pressure: float):
+	"""Increase applied pressure for the player"""
+	if player_id in self.player_influence:
+		self.player_influence[player_id] += pressure
+	else:
+		self.player_influence[player_id] = pressure
 
 
 func get_influence_income():

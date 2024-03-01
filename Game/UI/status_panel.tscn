@@ -14,13 +14,17 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-water_label = NodePath("HBoxContainer/CenterContainer4/WaterLabel")
+expansion_power_label = NodePath("HBoxContainer/CenterContainer4/ExpansionLabel")
+total_influence_label = NodePath("HBoxContainer/CenterContainer5/InfluenceLabel")
 rock_label = NodePath("HBoxContainer/CenterContainer/RockLabel")
 
 [node name="ColorRect" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 40 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
@@ -51,7 +55,50 @@ margin_right = 104.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 30, 0 )
 
-[node name="WaterLabel" type="Label" parent="HBoxContainer/CenterContainer4"]
+[node name="ExpansionLabel" type="Label" parent="HBoxContainer/CenterContainer4"]
+margin_top = 3.0
+margin_right = 60.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 60, 30 )
+size_flags_vertical = 5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer6" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 108.0
+margin_right = 119.0
+margin_bottom = 45.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Divider" type="Label" parent="HBoxContainer/CenterContainer6"]
+margin_top = 3.0
+margin_right = 11.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 10, 30 )
+size_flags_vertical = 5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "/"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer5" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 123.0
+margin_right = 183.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 30, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfluenceLabel" type="Label" parent="HBoxContainer/CenterContainer5"]
 margin_top = 3.0
 margin_right = 60.0
 margin_bottom = 41.0
@@ -65,8 +112,8 @@ __meta__ = {
 }
 
 [node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
-margin_left = 108.0
-margin_right = 148.0
+margin_left = 187.0
+margin_right = 227.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 40, 0 )
 
@@ -81,8 +128,8 @@ expand = true
 stretch_mode = 5
 
 [node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
-margin_left = 152.0
-margin_right = 212.0
+margin_left = 231.0
+margin_right = 291.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 30, 0 )
 

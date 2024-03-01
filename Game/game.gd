@@ -50,19 +50,25 @@ func _process(delta: float):
 	"""Game logic and UI update"""
 
 	for player in self.players:
-		var income = self.get_influence_income(player)
-		var drain = self.get_influence_drain(player)
-
-		if player.player_id == current_player:
-			GameEvents.emit_signal("water_level_changed", income - drain)
+		update_power(player)
 
 	self.ground_tilemap.tile_update()
+
+
+func update_power(player: Player):
+	var income = self.get_influence_income(player)
+	var drain = self.get_influence_drain(player)
+
+	if player.player_id == current_player:
+		GameEvents.emit_signal("rock_level_changed", player.rock_amount)
+		GameEvents.emit_signal("expansion_power_changed", income - drain)
+		GameEvents.emit_signal("total_influence_changed", income)
 
 
 func update():
 	"""Game update loop calls this function periodically"""
 	for player in self.players:
-		self.assign_influence(player, 10)
+		self.assign_influence(player)
 
 
 func build_building(player: Player, global_location: Vector2):
@@ -70,9 +76,8 @@ func build_building(player: Player, global_location: Vector2):
 	if player.rock_amount >= pump.cost:
 		player.rock_amount -= pump.cost
 		build_at_location(pump, global_location)
+		update_power(player)
 
-		if player.player_id == current_player:
-			GameEvents.emit_signal("rock_level_changed", player.rock_amount)
 	else:
 		pump.queue_free()
 
@@ -81,29 +86,27 @@ func get_influence_income(player: Player):
 	"""Go over influenced controllers and compute the influence income"""
 	var influence = 0
 	for controller in self.influenced_tiles[player.player_id]:
-		influence += controller.total_influence(player.player_id)
+		influence += controller.influence_income(player.player_id)
 	return influence
 
 
 func get_influence_drain(player: Player):
 	"""Go over influenced controllers and compute the influence drain
 	
-	Each non-controlled tile draws 1 influence
+	Each non-controlled tile draws influence based on applied pressure
 	"""
-	var count_of_draining_tiles = 0
+	var drain = 0
 	for controller in self.influenced_tiles[player.player_id]:
-		var income = controller.total_influence(player.player_id)
-		if income == 0:
-			count_of_draining_tiles += 1
-
-	return count_of_draining_tiles
+		drain += controller.influence_drain(player.player_id)
+	return drain
 
 
-func assign_influence(player, influence: float):
+func assign_influence(player):
 	"""Go over controllers that we want to increase our influence"""
 
 	for controller in self.influenced_tiles[player.player_id]:
-		var control_flipped = controller.increase_influence(player.player_id, influence)
+		var drain = controller.influence_drain(player.player_id)
+		var control_flipped = controller.increase_influence(player.player_id, drain)
 		if control_flipped:
 			controller.assign_player(player.color)
 
@@ -124,10 +127,13 @@ func spread_influence(player: Player, global_location: Vector2):
 	if controller == null:
 		return
 
+	# Apply more pressute to the tile
+	controller.increase_influence_pressure(player.player_id, 1)
+
+	# Mark the controller as influenced if not already there
 	for already_influenced_controller in self.influenced_tiles[player.player_id]:
 		if controller == already_influenced_controller:
 			return
-
 	self.influenced_tiles[player.player_id].append(controller)
 
 
