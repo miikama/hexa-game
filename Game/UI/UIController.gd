@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 export(NodePath) onready var menu_dialog = get_node(menu_dialog) as PopupDialog
-export(NodePath) onready var victory_dialog = get_node(victory_dialog) as Panel
+export(NodePath) onready var victory_dialog = get_node(victory_dialog)
 
 
 func _ready():

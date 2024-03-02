@@ -24,8 +24,6 @@ func _ready():
 	add_child(game_timer)
 	game_timer.start()
 
-	GameEvents.connect("all_tiles_controlled", self, "_on_player_won")
-
 	GameState.start()
 
 
@@ -44,6 +42,9 @@ func debug_setup():
 func _on_first_build():
 	self.build_building(self.players[-1], Vector2(100, 100))
 	self.spread_influence(self.players[-1], Vector2(100, 100))
+
+	self.build_building(self.players[0], Vector2(485, 375))
+	self.spread_influence(self.players[0], Vector2(485, 375))
 
 
 func _process(delta: float):
@@ -67,8 +68,14 @@ func update_power(player: Player):
 
 func update():
 	"""Game update loop calls this function periodically"""
+
+	if not GameState.running:
+		return
+
 	for player in self.players:
 		self.assign_influence(player)
+
+	self.check_game_end()
 
 
 func build_building(player: Player, global_location: Vector2):
@@ -146,35 +153,30 @@ func make_player(name, id, color):
 	players.append(player)
 
 
-func _on_player_won():
-	var winner = compute_winner()
-	if winner == null:
-		print("No winner even though player won!")
-		return
+func check_game_end():
+	"""If there is only one player controlling tiles, they win"""
 
-	GameEvents.emit_signal("player_won", winner)
-	GameState.pause()
+	var winner = self.compute_winner()
+
+	if winner:
+		GameEvents.emit_signal("player_won", winner)
+		GameState.pause()
 
 
 func compute_winner():
+	"""Check how many tile owning players there are ignoring uncontrolled tiles"""
 	var tile_owning_players = {}
-	var winner = null
-	var most_tiles = 0
 	for controller in ground_tilemap.controllers:
-		if controller.player:
-			if controller.player in tile_owning_players:
-				tile_owning_players[controller.player] += 1
-			else:
-				tile_owning_players[controller.player] = 1
+		if controller.controlling_player_id != controller.UNCONTROLLED:
+			tile_owning_players[controller.controlling_player_id] = controller.controlling_player_id
 
-			if tile_owning_players[controller.player] > most_tiles:
-				winner = controller.player
-				most_tiles = tile_owning_players[controller.player]
+	if len(tile_owning_players) == 1:
+		var winning_id = tile_owning_players.values()[0]
 
-	if winner == null:
-		return
-
-	return winner
+		for player in self.players:
+			if player.player_id == winning_id:
+				return player
+	return null
 
 
 func _unhandled_input(event):

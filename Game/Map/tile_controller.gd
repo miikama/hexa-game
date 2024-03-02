@@ -20,7 +20,9 @@ var spread = false
 
 var building: Building
 var influence: float = 0
-var controlling_player_id = 0
+
+var UNCONTROLLED = 65535
+var controlling_player_id = UNCONTROLLED
 
 # How much influence pressure the player_id -> amount of influence
 var player_influence: Dictionary = {}

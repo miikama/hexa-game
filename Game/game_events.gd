@@ -18,4 +18,3 @@ signal building_added
 
 signal influence_tile
 signal spread_to_tile
-signal all_tiles_controlled

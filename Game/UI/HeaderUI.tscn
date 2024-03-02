@@ -17,12 +17,7 @@ victory_dialog = NodePath("VictoryPanelUI")
 
 [node name="VictoryPanelUI" parent="." instance=ExtResource( 4 )]
 visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -125.0
-margin_top = -75.0
-margin_right = 125.0
-margin_bottom = 75.0
-victory_label = NodePath("")
+margin_left = 386.704
+margin_top = 225.666
+margin_right = -387.296
+margin_bottom = -224.334
