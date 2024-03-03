@@ -40,11 +40,21 @@ func debug_setup():
 
 
 func _on_first_build():
-	self.build_building(self.players[-1], Vector2(100, 100))
-	self.spread_influence(self.players[-1], Vector2(100, 100))
+	var enemy = self.players[-1]
+	self.build_building(enemy, Vector2(100, 100))
+	var controller = ground_tilemap.get_controller_for_location(Vector2(100, 100))
+	assert(controller != null)
+	controller.assign_player(enemy.color, enemy.player_id)
+	mark_tile_influenced(controller, enemy)
+	self.spread_influence(enemy, Vector2(100, 100))
 
-	self.build_building(self.players[0], Vector2(485, 375))
-	self.spread_influence(self.players[0], Vector2(485, 375))
+	var protagonist = self.players[0]
+	self.build_building(protagonist, Vector2(485, 375))
+	var controller2 = ground_tilemap.get_controller_for_location(Vector2(485, 375))
+	assert(controller2 != null)
+	controller2.assign_player(protagonist.color, protagonist.player_id)
+	mark_tile_influenced(controller2, protagonist)
+	self.spread_influence(protagonist, Vector2(485, 375))
 
 
 func _process(delta: float):
@@ -115,7 +125,7 @@ func assign_influence(player):
 		var drain = controller.influence_drain(player.player_id)
 		var control_flipped = controller.increase_influence(player.player_id, drain)
 		if control_flipped:
-			controller.assign_player(player.color)
+			controller.assign_player(player.color, player.player_id)
 
 
 func spread_influence(player: Player, global_location: Vector2):
@@ -134,9 +144,21 @@ func spread_influence(player: Player, global_location: Vector2):
 	if controller == null:
 		return
 
+	var income = self.get_influence_income(player)
+	var drain = self.get_influence_drain(player)
+
+	if income - drain <= 0:
+		return
+
 	# Apply more pressute to the tile
 	controller.increase_influence_pressure(player.player_id, 1)
 
+	# note down that the player influences the tile
+	mark_tile_influenced(controller, player)
+
+
+func mark_tile_influenced(controller: TileController, player: Player):
+	""""""
 	# Mark the controller as influenced if not already there
 	for already_influenced_controller in self.influenced_tiles[player.player_id]:
 		if controller == already_influenced_controller:

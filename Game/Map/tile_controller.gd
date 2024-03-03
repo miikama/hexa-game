@@ -103,7 +103,9 @@ func get_influence_income():
 	return tile_influence
 
 
-func assign_player(player_color: Color):
+func assign_player(player_color: Color, player_id: int):
+	self.controlling_player_id = player_id
+
 	area_highlight.visible = true
 	area_highlight.material.set_shader_param("color", player_color)
 
