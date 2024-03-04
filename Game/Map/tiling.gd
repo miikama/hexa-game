@@ -11,8 +11,9 @@ const GROUND_1 = 1
 const GROUND_2 = 3
 const GROUND_3 = 2
 const WATER = 4
+const MINE = 5
 
-const tile_levels = [GROUND_TILE, GROUND_1, GROUND_2, GROUND_3, WATER]
+const tile_levels = [GROUND_TILE, GROUND_1, GROUND_2, GROUND_3, WATER, MINE]
 
 enum TileType {
 	GROUND = 0,
@@ -20,6 +21,7 @@ enum TileType {
 	GREEN2 = 3,
 	GREEN3 = 2,
 	WATER = 4,
+	MINE = 5,
 }
 
 # constants from the tile graphics

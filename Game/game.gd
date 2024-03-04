@@ -62,6 +62,11 @@ func _on_first_build():
 		Tiling.TileType.WATER
 	)
 
+	# Add a mine
+	ground_tilemap.get_controller_for_location(Vector2(600, 400)).add_tile_modifier(
+		Tiling.TileType.MINE
+	)
+
 
 func _process(delta: float):
 	"""Game logic and UI update"""
