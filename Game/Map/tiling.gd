@@ -10,8 +10,17 @@ const GROUND_TILE = 0
 const GROUND_1 = 1
 const GROUND_2 = 3
 const GROUND_3 = 2
+const WATER = 4
 
-const tile_levels = [GROUND_TILE, GROUND_1, GROUND_2, GROUND_3]
+const tile_levels = [GROUND_TILE, GROUND_1, GROUND_2, GROUND_3, WATER]
+
+enum TileType {
+	GROUND = 0,
+	GREEN1 = 1,
+	GREEN2 = 3,
+	GREEN3 = 2,
+	WATER = 4,
+}
 
 # constants from the tile graphics
 const tile_angle_height = 35.0

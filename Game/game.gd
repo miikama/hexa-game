@@ -40,21 +40,27 @@ func debug_setup():
 
 
 func _on_first_build():
-	var enemy = self.players[-1]
-	self.build_building(enemy, Vector2(100, 100))
-	var controller = ground_tilemap.get_controller_for_location(Vector2(100, 100))
-	assert(controller != null)
+	var enemy = self.players[0]
+	self.build_building(enemy, Vector2(300, 250))
+	var controller = ground_tilemap.get_controller_for_location(Vector2(300, 250))
 	controller.assign_player(enemy.color, enemy.player_id)
 	mark_tile_influenced(controller, enemy)
-	self.spread_influence(enemy, Vector2(100, 100))
+	self.spread_influence(enemy, Vector2(300, 250))
 
-	var protagonist = self.players[0]
-	self.build_building(protagonist, Vector2(485, 375))
-	var controller2 = ground_tilemap.get_controller_for_location(Vector2(485, 375))
-	assert(controller2 != null)
+	var protagonist = self.players[1]
+	self.build_building(protagonist, Vector2(730, 600))
+	var controller2 = ground_tilemap.get_controller_for_location(Vector2(730, 600))
 	controller2.assign_player(protagonist.color, protagonist.player_id)
 	mark_tile_influenced(controller2, protagonist)
-	self.spread_influence(protagonist, Vector2(485, 375))
+	self.spread_influence(protagonist, Vector2(730, 600))
+
+	# Add some water tiles
+	ground_tilemap.get_controller_for_location(Vector2(600, 200)).add_tile_modifier(
+		Tiling.TileType.WATER
+	)
+	ground_tilemap.get_controller_for_location(Vector2(450, 700)).add_tile_modifier(
+		Tiling.TileType.WATER
+	)
 
 
 func _process(delta: float):

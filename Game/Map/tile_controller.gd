@@ -12,6 +12,8 @@ var tile_cell
 var last_update
 var tile_level = 0
 var level_changes = [0, 25, 50]
+# combine this logic with the above
+var tile_modifiers = {}
 
 var water_level = 0
 
@@ -123,6 +125,15 @@ func set_water_level(level):
 			droplets[i].visible = false
 
 
+func add_tile_modifier(level):
+	"""
+	Allow adding extra modifiers to tiles
+
+	level: Tiling.TileType
+	"""
+	self.tile_modifiers[level] = level
+
+
 func spread_green(cell, target_tiles):
 	if spread:
 		return
@@ -144,6 +155,13 @@ func spread_green(cell, target_tiles):
 
 
 func get_tile_level():
+	"""
+	Currently, if there are extra modifiers (like water)
+	just return the first available
+	"""
+	for modifier in self.tile_modifiers:
+		return modifier
+
 	var tile_level = 0
 	for border in self.level_changes:
 		if self.influence > border:
