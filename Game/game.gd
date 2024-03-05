@@ -30,11 +30,12 @@ func _ready():
 func debug_setup():
 	"""help starting the game up"""
 	var status_timer: Timer = Timer.new()
-	status_timer.set_wait_time(1)
+	status_timer.set_wait_time(.1)
 	status_timer.one_shot = true
 	status_timer.connect("timeout", self, "_on_first_build")
 	add_child(status_timer)
 	status_timer.start()
+	#self._on_first_build()
 
 	GameEvents.emit_signal("rock_level_changed", self.players[0].rock_amount)
 
@@ -44,6 +45,7 @@ func _on_first_build():
 	self.build_building(enemy, Vector2(300, 250))
 	var controller = ground_tilemap.get_controller_for_location(Vector2(300, 250))
 	controller.assign_player(enemy.color, enemy.player_id)
+	controller.increase_influence(enemy.player_id, 50)
 	mark_tile_influenced(controller, enemy)
 	self.spread_influence(enemy, Vector2(300, 250))
 
@@ -51,6 +53,7 @@ func _on_first_build():
 	self.build_building(protagonist, Vector2(730, 600))
 	var controller2 = ground_tilemap.get_controller_for_location(Vector2(730, 600))
 	controller2.assign_player(protagonist.color, protagonist.player_id)
+	controller2.increase_influence(protagonist.player_id, 50)
 	mark_tile_influenced(controller2, protagonist)
 	self.spread_influence(protagonist, Vector2(730, 600))
 
@@ -200,6 +203,16 @@ func mark_tile_influenced(controller: TileController, player: Player):
 	self.influenced_tiles[player.player_id].append(controller)
 
 
+func get_controlled_tiles_for_player(player: Player) -> Array:
+	"""Return a list of all cells that the player controls"""
+	var cells = {}
+	for controller in self.influenced_tiles[player.player_id]:
+		if controller.controlling_player_id == player.player_id and controller.influence > 50:
+			cells[controller.tile_cell] = controller.tile_cell
+
+	return cells.values()
+
+
 func make_player(name, id, color):
 	var player = Player.new()
 	player.player_name = name
@@ -245,8 +258,14 @@ func _unhandled_input(event):
 	# A single click
 	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
 		var position = get_global_mouse_position()
-		self.build_building(self.players[0], position)
-		self.spread_influence(self.players[0], position)
+
+		# Only spread influence or build if the tile is neighbor of controlled tile
+		var cell = ground_tilemap.get_cell_from_world_loc(position)
+		if ground_tilemap.cell_is_neighbor_of(
+			cell, self.get_controlled_tiles_for_player(self.players[0])
+		):
+			self.build_building(self.players[0], position)
+			self.spread_influence(self.players[0], position)
 
 
 func build_at_location(building: Building, global_location: Vector2):

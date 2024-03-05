@@ -2,14 +2,8 @@ extends Node2D
 
 class_name TileController
 
-# in ms
-var update_interval = 500
-var water_level_effect = 500
-var max_water_level = 3
-
 var tile_cell
 
-var last_update
 var tile_level = 0
 var level_changes = [0, 25, 50]
 # combine this logic with the above
@@ -36,8 +30,6 @@ export(NodePath) onready var info_label = get_node(info_label) as RichTextLabel
 
 
 func _ready():
-	last_update = OS.get_ticks_msec()
-
 	droplets = [get_node("Sprite"), get_node("Sprite2"), get_node("Sprite3")]
 
 
@@ -51,8 +43,8 @@ func influence_drain(player_id: int) -> float:
 	if not player_id in player_influence:
 		return 0.0
 
-	if self.influence >= 100:
-		# stop influencing fully controlled tiles
+	# stop influencing fully controlled tiles
+	if player_id == self.controlling_player_id and self.influence >= 100:
 		player_influence[player_id] = 0
 	return player_influence[player_id]
 

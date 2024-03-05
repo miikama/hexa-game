@@ -116,6 +116,21 @@ func change_tile_level(cell, new_level):
 	return current_level
 
 
+func cell_is_neighbor_of(cell, source_cells):
+	"""Check whether the cell is in the neighbor cells"""
+
+	var allowed_cells = {}
+	for cell in source_cells:
+		# cell is neighbor of itself
+		allowed_cells[cell] = cell
+
+		var neighbors = get_neighbours_for_cell(cell)
+		for neighbor in neighbors:
+			allowed_cells[neighbor] = neighbor
+
+	return cell in allowed_cells
+
+
 func get_neighbours_for_cell(cell):
 	var even_offsets = [
 		Vector2(-1, -1),
