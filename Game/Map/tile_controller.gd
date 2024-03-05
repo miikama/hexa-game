@@ -57,6 +57,13 @@ func influence_drain(player_id: int) -> float:
 	return player_influence[player_id]
 
 
+func rock_income(player_id: int) -> float:
+	"""If the player is controlling player, return positive"""
+	if player_id == self.controlling_player_id:
+		return self.get_rock_income()
+	return 0.0
+
+
 func influence_income(player_id: int) -> float:
 	"""If the player is controlling player, return positive"""
 	if player_id == self.controlling_player_id:
@@ -92,6 +99,17 @@ func increase_influence_pressure(player_id: int, pressure: float):
 		self.player_influence[player_id] = pressure
 
 
+func get_rock_income():
+	"""Some tiles give rock"""
+	var rock_income = 0
+
+	# water tiles double influence income
+	if TileTypes.TileType.MINE in self.tile_modifiers:
+		rock_income += 5
+
+	return rock_income
+
+
 func get_influence_income():
 	"""Always positive"""
 	var tile_influence = 0
@@ -101,6 +119,10 @@ func get_influence_income():
 
 	if self.building:
 		tile_influence += self.building.get_influence_income()
+
+	# water tiles double influence income
+	if TileTypes.TileType.WATER in self.tile_modifiers:
+		tile_influence = tile_influence * 2
 
 	return tile_influence
 

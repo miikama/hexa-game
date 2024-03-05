@@ -15,15 +15,6 @@ const MINE = 5
 
 const tile_levels = [GROUND_TILE, GROUND_1, GROUND_2, GROUND_3, WATER, MINE]
 
-enum TileType {
-	GROUND = 0,
-	GREEN1 = 1,
-	GREEN2 = 3,
-	GREEN3 = 2,
-	WATER = 4,
-	MINE = 5,
-}
-
 # constants from the tile graphics
 const tile_angle_height = 35.0
 const tile_wall_height = 105.0

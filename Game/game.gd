@@ -56,15 +56,15 @@ func _on_first_build():
 
 	# Add some water tiles
 	ground_tilemap.get_controller_for_location(Vector2(600, 200)).add_tile_modifier(
-		Tiling.TileType.WATER
+		TileTypes.TileType.WATER
 	)
 	ground_tilemap.get_controller_for_location(Vector2(450, 700)).add_tile_modifier(
-		Tiling.TileType.WATER
+		TileTypes.TileType.WATER
 	)
 
 	# Add a mine
 	ground_tilemap.get_controller_for_location(Vector2(600, 400)).add_tile_modifier(
-		Tiling.TileType.MINE
+		TileTypes.TileType.MINE
 	)
 
 
@@ -96,6 +96,9 @@ func update():
 	for player in self.players:
 		self.assign_influence(player)
 
+		var rock_income = self.get_rock_income(player)
+		player.rock_amount += rock_income
+
 	self.check_game_end()
 
 
@@ -108,6 +111,14 @@ func build_building(player: Player, global_location: Vector2):
 
 	else:
 		pump.queue_free()
+
+
+func get_rock_income(player: Player):
+	"""Go over influenced controllers and compute the rock income"""
+	var rock = 0
+	for controller in self.influenced_tiles[player.player_id]:
+		rock += controller.rock_income(player.player_id)
+	return rock
 
 
 func get_influence_income(player: Player):
