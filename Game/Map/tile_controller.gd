@@ -20,7 +20,7 @@ var water_level = 0
 var growing = false
 var spread = false
 
-var building: Building
+var building: Building = null
 var influence: float = 0
 
 var UNCONTROLLED = 65535
@@ -154,26 +154,6 @@ func add_tile_modifier(level):
 	level: Tiling.TileType
 	"""
 	self.tile_modifiers[level] = level
-
-
-func spread_green(cell, target_tiles):
-	if spread:
-		return
-
-	# only spread from developed areas
-	# tile_map.get_cellv(cell) == tile_map.GROUND_TILE:
-	if self.tile_level < self.water_level or self.tile_level == 0:
-		return
-
-	if OS.get_ticks_msec() - last_update < update_interval:
-		return
-
-	# spread to each neighbouring cell
-	#for target_cell in target_tiles:
-	#if tile_map.get_cellv(target_cell) == tile_map.GROUND_TILE:
-	#GameEvents.emit_signal("spread_to_tile", target_cell, player)
-
-	spread = true
 
 
 func get_tile_level():

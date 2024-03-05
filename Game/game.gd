@@ -103,6 +103,18 @@ func update():
 
 
 func build_building(player: Player, global_location: Vector2):
+	"""Try to build a building at location, only allow one building at a time"""
+
+	var controller = ground_tilemap.get_controller_for_location(global_location)
+
+	# skip building outside of the map
+	if !controller:
+		return
+
+	# Avoid building two buildings on a tile
+	if controller.building:
+		return
+
 	var pump = BuildingManager.pump.instance()
 	if player.rock_amount >= pump.cost:
 		player.rock_amount -= pump.cost
@@ -238,6 +250,10 @@ func _unhandled_input(event):
 
 
 func build_at_location(building: Building, global_location: Vector2):
+	var controller = ground_tilemap.get_controller_for_location(global_location)
+	if !controller:
+		return
+
 	# setting up building
 	var offset = ground_tilemap.cell_size / 2
 	offset.y += ground_tilemap.cell_size.y / 4
@@ -245,7 +261,5 @@ func build_at_location(building: Building, global_location: Vector2):
 	add_child(building)
 
 	# setting up water level
-	var cell = ground_tilemap.get_cell_from_world_loc(global_location)
-	var controller = ground_tilemap.get_controller_for_cell(cell)
 	controller.building = building
 	controller.set_water_level(controller.water_level + building.water_production)
