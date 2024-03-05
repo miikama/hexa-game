@@ -72,7 +72,7 @@ func increase_influence(player_id: int, influence_increase: float) -> bool:
 	"""
 	if player_id == self.controlling_player_id:
 		self.influence = min(100.0, self.influence + influence_increase)
-		info_label.text = str(self.influence)
+		info_label.bbcode_text = "[center]%s[/center]" % self.influence
 	else:
 		self.influence -= influence_increase
 
@@ -112,7 +112,7 @@ func assign_player(player_color: Color, player_id: int):
 	area_highlight.material.set_shader_param("color", player_color)
 
 	info_label.visible = true
-	info_label.text = str(self.influence)
+	info_label.bbcode_text = "[center]%s[/center]" % self.influence
 	info_label.modulate = player_color
 
 
