@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Game/Player/player.gd"
 }, {
+"base": "Node2D",
+"class": "PopUpAnimation",
+"language": "GDScript",
+"path": "res://Game/UI/text_animation.gd"
+}, {
 "base": "Building",
 "class": "Pump",
 "language": "GDScript",
@@ -48,6 +53,7 @@ _global_script_class_icons={
 "Building": "",
 "Game": "",
 "Player": "",
+"PopUpAnimation": "",
 "Pump": "",
 "TileController": "",
 "TileTypes": "",

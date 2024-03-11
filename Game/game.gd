@@ -45,7 +45,7 @@ func _on_first_build():
 	self.build_building(enemy, Vector2(300, 250))
 	var controller = ground_tilemap.get_controller_for_location(Vector2(300, 250))
 	controller.assign_player(enemy.color, enemy.player_id)
-	controller.increase_influence(enemy.player_id, 50)
+	controller.increase_influence(enemy.player_id, enemy.color, 50)
 	mark_tile_influenced(controller, enemy)
 	self.spread_influence(enemy, Vector2(300, 250))
 
@@ -53,7 +53,7 @@ func _on_first_build():
 	self.build_building(protagonist, Vector2(730, 600))
 	var controller2 = ground_tilemap.get_controller_for_location(Vector2(730, 600))
 	controller2.assign_player(protagonist.color, protagonist.player_id)
-	controller2.increase_influence(protagonist.player_id, 50)
+	controller2.increase_influence(protagonist.player_id, protagonist.color, 50)
 	mark_tile_influenced(controller2, protagonist)
 	self.spread_influence(protagonist, Vector2(730, 600))
 
@@ -160,7 +160,7 @@ func assign_influence(player):
 
 	for controller in self.influenced_tiles[player.player_id]:
 		var drain = controller.influence_drain(player.player_id)
-		var control_flipped = controller.increase_influence(player.player_id, drain)
+		var control_flipped = controller.increase_influence(player.player_id, player.color, drain)
 		if control_flipped:
 			controller.assign_player(player.color, player.player_id)
 

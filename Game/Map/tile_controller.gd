@@ -27,6 +27,7 @@ var droplets = []
 
 export(NodePath) onready var area_highlight = get_node(area_highlight) as Sprite
 export(NodePath) onready var info_label = get_node(info_label) as RichTextLabel
+export(NodePath) onready var influence_animation = get_node(influence_animation) as PopUpAnimation
 
 
 func _ready():
@@ -63,7 +64,7 @@ func influence_income(player_id: int) -> float:
 	return 0.0
 
 
-func increase_influence(player_id: int, influence_increase: float) -> bool:
+func increase_influence(player_id: int, player_color: Color, influence_increase: float) -> bool:
 	"""Increase influence of a player on the tile,
 	possibly changing ownership
 
@@ -72,6 +73,7 @@ func increase_influence(player_id: int, influence_increase: float) -> bool:
 	if player_id == self.controlling_player_id:
 		self.influence = min(100.0, self.influence + influence_increase)
 		info_label.bbcode_text = "[center]%s[/center]" % self.influence
+		self.influence_animation.start_animation("+%d" % influence_increase, player_color)
 	else:
 		self.influence -= influence_increase
 
