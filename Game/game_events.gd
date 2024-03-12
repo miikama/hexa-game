@@ -14,7 +14,7 @@ signal expansion_power_changed
 signal total_influence_changed
 signal rock_level_changed
 
-signal building_added
+signal build_building
 
 signal influence_tile
 signal spread_to_tile

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wave.png-2a9ba179482ef3fcdf84744818a31dbb.stex"
+path="res://.import/rock.png-ba3702a5fd2f4a6d7c35f204be2bf382.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/UI/wave.png"
-dest_files=[ "res://.import/wave.png-2a9ba179482ef3fcdf84744818a31dbb.stex" ]
+source_file="res://Game/UI/icons/rock.png"
+dest_files=[ "res://.import/rock.png-ba3702a5fd2f4a6d7c35f204be2bf382.stex" ]
 
 [params]
 
@@ -20,8 +20,8 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
-flags/mipmaps=true
+flags/filter=false
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

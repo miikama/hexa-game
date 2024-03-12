@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Game/Buildings/Pump/pump_texture.tres" type="Texture" id=2]
+[ext_resource path="res://Game/Buildings/Mine/mine_texture.tres" type="Texture" id=3]
+[ext_resource path="res://Game/UI/build_menu.gd" type="Script" id=4]
+[ext_resource path="res://Game/UI/icons/rock.png" type="Texture" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 5 )
+region = Rect2( 50.397, 0, 431.956, 540.759 )
+filter_clip = true
+
+[node name="BuildMenu" type="PopupDialog"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -125.0
+margin_top = -150.0
+margin_right = 125.0
+rect_scale = Vector2( 0.8, 0.8 )
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -34.0
+margin_bottom = -16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+margin_right = 244.0
+margin_bottom = 124.0
+columns = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer"]
+margin_right = 120.0
+margin_bottom = 124.0
+
+[node name="Mine" type="TextureRect" parent="MarginContainer/GridContainer/VBoxContainer"]
+margin_right = 120.0
+margin_bottom = 80.0
+texture = ExtResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/VBoxContainer"]
+margin_top = 84.0
+margin_right = 120.0
+margin_bottom = 124.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/VBoxContainer/HBoxContainer"]
+margin_top = 1.0
+margin_right = 57.0
+margin_bottom = 39.0
+text = "100"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/GridContainer/VBoxContainer/HBoxContainer"]
+margin_left = 61.0
+margin_right = 101.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = SubResource( 1 )
+expand = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/GridContainer"]
+margin_left = 124.0
+margin_right = 244.0
+margin_bottom = 124.0
+
+[node name="Pump" type="TextureRect" parent="MarginContainer/GridContainer/VBoxContainer2"]
+margin_right = 120.0
+margin_bottom = 80.0
+texture = ExtResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/VBoxContainer2"]
+margin_top = 84.0
+margin_right = 120.0
+margin_bottom = 124.0
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/VBoxContainer2/HBoxContainer"]
+margin_top = 1.0
+margin_right = 57.0
+margin_bottom = 39.0
+text = "100"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/GridContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 61.0
+margin_right = 101.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = SubResource( 1 )
+expand = true

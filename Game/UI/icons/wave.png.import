@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/water-drop.png-99ce935677c33ecbd0732a120a002723.stex"
+path="res://.import/wave.png-fc73e836f18cecdd6ba9b0d36b43e166.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/UI/water-drop.png"
-dest_files=[ "res://.import/water-drop.png-99ce935677c33ecbd0732a120a002723.stex" ]
+source_file="res://Game/UI/icons/wave.png"
+dest_files=[ "res://.import/wave.png-fc73e836f18cecdd6ba9b0d36b43e166.stex" ]
 
 [params]
 
@@ -20,8 +20,8 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
-flags/mipmaps=false
+flags/filter=true
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

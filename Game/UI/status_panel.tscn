@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Game/UI/wave.png" type="Texture" id=3]
+[ext_resource path="res://Game/UI/icons/wave.png" type="Texture" id=3]
 [ext_resource path="res://Game/UI/menu-lines.png" type="Texture" id=4]
 [ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=5]
 [ext_resource path="res://Game/UI/status_ui.gd" type="Script" id=6]
-[ext_resource path="res://Game/UI/rock.png" type="Texture" id=7]
+[ext_resource path="res://Game/UI/icons/rock.png" type="Texture" id=7]
 
 [node name="StatusUI" type="Control"]
 anchor_right = 1.0

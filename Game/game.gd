@@ -255,8 +255,13 @@ func _unhandled_input(event):
 		)
 		GameEvents.emit_signal("tile_selected", tile_pos)
 
+	# A single right click
+	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_RIGHT:
+		var position = get_global_mouse_position()
+		GameEvents.emit_signal("build_building", position)
+
 	# A single click
-	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
+	elif event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
 		var position = get_global_mouse_position()
 
 		# Only spread influence or build if the tile is neighbor of controlled tile

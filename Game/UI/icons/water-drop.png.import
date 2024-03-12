@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rock.png-fe91ff1e8979bc60c1d7a681f63272f1.stex"
+path="res://.import/water-drop.png-1d3f34541d454aa21a188f8c3a172231.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/UI/rock.png"
-dest_files=[ "res://.import/rock.png-fe91ff1e8979bc60c1d7a681f63272f1.stex" ]
+source_file="res://Game/UI/icons/water-drop.png"
+dest_files=[ "res://.import/water-drop.png-1d3f34541d454aa21a188f8c3a172231.stex" ]
 
 [params]
 
