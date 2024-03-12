@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Game/game.gd"
 }, {
+"base": "Building",
+"class": "Mine",
+"language": "GDScript",
+"path": "res://Game/Buildings/Mine/mine.gd"
+}, {
 "base": "Node2D",
 "class": "Player",
 "language": "GDScript",
@@ -52,6 +57,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Building": "",
 "Game": "",
+"Mine": "",
 "Player": "",
 "PopUpAnimation": "",
 "Pump": "",

@@ -42,7 +42,7 @@ func debug_setup():
 
 func _on_first_build():
 	var enemy = self.players[0]
-	self.build_building(enemy, Vector2(300, 250))
+	self.build_building(enemy, Vector2(300, 250), BuildingManager.BuildingType.Pump)
 	var controller = ground_tilemap.get_controller_for_location(Vector2(300, 250))
 	controller.assign_player(enemy.color, enemy.player_id)
 	controller.increase_influence(enemy.player_id, enemy.color, 50)
@@ -50,7 +50,7 @@ func _on_first_build():
 	self.spread_influence(enemy, Vector2(300, 250))
 
 	var protagonist = self.players[1]
-	self.build_building(protagonist, Vector2(730, 600))
+	self.build_building(protagonist, Vector2(730, 600), BuildingManager.BuildingType.Pump)
 	var controller2 = ground_tilemap.get_controller_for_location(Vector2(730, 600))
 	controller2.assign_player(protagonist.color, protagonist.player_id)
 	controller2.increase_influence(protagonist.player_id, protagonist.color, 50)
@@ -105,8 +105,8 @@ func update():
 	self.check_game_end()
 
 
-func build_building(player: Player, global_location: Vector2):
-	"""Try to build a building at location, only allow one building at a time"""
+func build_building(player: Player, global_location: Vector2, building_type: int):
+	"""Try to build a building of building type at location, only allow one building at a time"""
 
 	var controller = ground_tilemap.get_controller_for_location(global_location)
 
@@ -118,14 +118,14 @@ func build_building(player: Player, global_location: Vector2):
 	if controller.building:
 		return
 
-	var pump = BuildingManager.pump.instance()
-	if player.rock_amount >= pump.cost:
-		player.rock_amount -= pump.cost
-		build_at_location(pump, global_location)
+	var building = BuildingManager.get_building_of_type(building_type)
+	if player.rock_amount >= building.cost:
+		player.rock_amount -= building.cost
+		build_at_location(building, global_location)
 		update_power(player)
 
 	else:
-		pump.queue_free()
+		building.queue_free()
 
 
 func get_rock_income(player: Player):
@@ -264,7 +264,7 @@ func _unhandled_input(event):
 		if ground_tilemap.cell_is_neighbor_of(
 			cell, self.get_controlled_tiles_for_player(self.players[0])
 		):
-			self.build_building(self.players[0], position)
+			self.build_building(self.players[0], position, BuildingManager.BuildingType.Mine)
 			self.spread_influence(self.players[0], position)
 
 
