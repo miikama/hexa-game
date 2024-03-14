@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/menu-lines.png-172f937e1239ead216265ca4814aaa29.stex"
+path="res://.import/menu-lines.png-be217adeaef561825af06b97d912f43a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/UI/menu-lines.png"
-dest_files=[ "res://.import/menu-lines.png-172f937e1239ead216265ca4814aaa29.stex" ]
+source_file="res://Game/UI/GameHeader/menu-lines.png"
+dest_files=[ "res://.import/menu-lines.png-be217adeaef561825af06b97d912f43a.stex" ]
 
 [params]
 

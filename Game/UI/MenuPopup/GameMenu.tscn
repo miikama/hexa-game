@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=1]
-[ext_resource path="res://Game/UI/game_menu.gd" type="Script" id=2]
+[ext_resource path="res://Game/UI/Themes/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Game/UI/MenuPopup/game_menu.gd" type="Script" id=2]
 
 [node name="GameMenuUI" type="PopupDialog"]
 anchor_left = 0.5

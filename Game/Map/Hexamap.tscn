@@ -3,7 +3,7 @@
 [ext_resource path="res://Game/Map/Camera2D.gd" type="Script" id=1]
 [ext_resource path="res://Game/Tiles/hexas.tres" type="TileSet" id=2]
 [ext_resource path="res://Game/Map/tiling.gd" type="Script" id=3]
-[ext_resource path="res://Game/UI/HeaderUI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Game/UI/Scene/GameScene.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Game/Selection/highlight.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Game/game.gd" type="Script" id=6]
 

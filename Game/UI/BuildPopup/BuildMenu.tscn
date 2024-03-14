@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Game/UI/main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Game/UI/Themes/main_theme.tres" type="Theme" id=1]
 [ext_resource path="res://Game/Buildings/Pump/pump_texture.tres" type="Texture" id=2]
 [ext_resource path="res://Game/Buildings/Mine/mine_texture.tres" type="Texture" id=3]
-[ext_resource path="res://Game/UI/build_menu.gd" type="Script" id=4]
+[ext_resource path="res://Game/UI/BuildPopup/build_menu.gd" type="Script" id=4]
 [ext_resource path="res://Game/UI/icons/rock.png" type="Texture" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -12,7 +12,6 @@ region = Rect2( 50.397, 0, 431.956, 540.759 )
 filter_clip = true
 
 [node name="BuildMenu" type="PopupDialog"]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
