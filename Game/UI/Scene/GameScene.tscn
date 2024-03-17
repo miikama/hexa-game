@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Game/UI/GameHeader/GameHeader.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Game/UI/BuildPopup/BuildMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game/UI/Scene/game_scene.gd" type="Script" id=3]
 [ext_resource path="res://Game/UI/VictoryPopup/VictoryPanelUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Game/UI/MenuPopup/GameMenu.tscn" type="PackedScene" id=5]
@@ -10,7 +9,6 @@
 pause_mode = 1
 script = ExtResource( 3 )
 menu_dialog = NodePath("GameMenuUI")
-build_dialog = NodePath("BuildMenu")
 victory_dialog = NodePath("VictoryPanelUI")
 
 [node name="GameHeader" parent="." instance=ExtResource( 1 )]
@@ -23,5 +21,3 @@ margin_left = 386.704
 margin_top = 225.666
 margin_right = -387.296
 margin_bottom = -224.334
-
-[node name="BuildMenu" parent="." instance=ExtResource( 2 )]
