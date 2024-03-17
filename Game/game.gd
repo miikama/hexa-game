@@ -164,6 +164,9 @@ func assign_influence(player):
 		if control_flipped:
 			controller.assign_player(player.color, player.player_id)
 
+		var income = controller.influence_income(player.player_id)
+		controller.animate(player.player_id, player.color, income - drain)
+
 
 func spread_influence(player: Player, global_location: Vector2):
 	"""Mark a tile as target of influence spread"""

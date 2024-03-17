@@ -34,6 +34,14 @@ func _ready():
 	droplets = [get_node("Sprite"), get_node("Sprite2"), get_node("Sprite3")]
 
 
+func animate(player_id: int, player_color: Color, incluence_effect: float):
+	info_label.bbcode_text = "[center]%s[/center]" % self.influence
+	var format = "+%2d"
+	if incluence_effect < 0:
+		format = "%2d"
+	self.influence_animation.start_animation(format % incluence_effect, player_color)
+
+
 func influence_drain(player_id: int) -> float:
 	"""The players are allowed to apply pressure to tiles
 
@@ -72,8 +80,6 @@ func increase_influence(player_id: int, player_color: Color, influence_increase:
 	"""
 	if player_id == self.controlling_player_id:
 		self.influence = min(100.0, self.influence + influence_increase)
-		info_label.bbcode_text = "[center]%s[/center]" % self.influence
-		self.influence_animation.start_animation("+%d" % influence_increase, player_color)
 	else:
 		self.influence -= influence_increase
 

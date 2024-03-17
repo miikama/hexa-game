@@ -9,6 +9,7 @@ func _ready():
 	GameEvents.connect("quit_to_main_menu", self, "_on_quit_to_main_menu")
 	GameEvents.connect("quit_to_desktop", self, "_on_exit")
 
+
 func _on_player_won(player):
 	victory_dialog.set_player(player)
 	victory_dialog.visible = true
