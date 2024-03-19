@@ -3,6 +3,7 @@ extends Node2D
 class_name TileController
 
 var tile_cell
+# var global_position comes from Node2D
 
 var tile_level = 0
 var level_changes = [0, 25, 50]

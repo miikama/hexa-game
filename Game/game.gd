@@ -11,7 +11,7 @@ var current_player = 1
 
 func _ready():
 	make_player("player1", 1, Color(0.2, 0.2, 0.8))
-	make_player("player2", 2, Color(0.8, 0.2, 0.2))
+	make_ai("player2", 2, Color(0.8, 0.2, 0.2))
 
 	for player in self.players:
 		self.influenced_tiles[player.player_id] = []
@@ -54,6 +54,7 @@ func _on_first_build():
 	var controller2 = ground_tilemap.get_controller_for_location(Vector2(730, 600))
 	controller2.assign_player(protagonist.color, protagonist.player_id)
 	controller2.increase_influence(protagonist.player_id, protagonist.color, 50)
+	print("controller for position ", Vector2(730, 600), " is at ", controller2.global_position)
 	mark_tile_influenced(controller2, protagonist)
 	self.spread_influence(protagonist, Vector2(730, 600))
 
@@ -91,13 +92,17 @@ func update_power(player: Player):
 
 
 func update():
-	"""Game update loop calls this function periodically"""
+	"""Game update loop calls this function periodically
+	"""
 
 	if not GameState.running:
 		return
 
 	for player in self.players:
 		self.assign_influence(player)
+
+		# Allow AI actors do their thing
+		player.do_action(self)
 
 		var rock_income = self.get_rock_income(player)
 		player.rock_amount += rock_income
@@ -172,15 +177,6 @@ func spread_influence(player: Player, global_location: Vector2):
 	"""Mark a tile as target of influence spread"""
 	var controller = ground_tilemap.get_controller_for_location(global_location)
 
-	print(
-		"spreading influence for player ",
-		player.player_id,
-		" and controller ",
-		controller,
-		" at location ",
-		global_location
-	)
-
 	if controller == null:
 		return
 
@@ -206,7 +202,12 @@ func mark_tile_influenced(controller: TileController, player: Player):
 	self.influenced_tiles[player.player_id].append(controller)
 
 
-func get_controlled_tiles_for_player(player: Player) -> Array:
+func get_influenced_tiles_for_player(player: Player) -> Array:
+	"""Return the tiles player influence, but not necessarily controls"""
+	return self.influenced_tiles[player.player_id]
+
+
+func get_controlled_cells_for_player(player: Player) -> Array:
 	"""Return a list of all cells that the player controls"""
 	var cells = {}
 	for controller in self.influenced_tiles[player.player_id]:
@@ -216,13 +217,31 @@ func get_controlled_tiles_for_player(player: Player) -> Array:
 	return cells.values()
 
 
+func get_controlled_tiles_for_player(player: Player) -> Array:
+	"""Return a list of all tiles that the player controls"""
+	var cells = self.get_controlled_cells_for_player(player)
+
+	var tiles = []
+
+	for cell in cells:
+		tiles.append(ground_tilemap.get_controller_for_cell(cell))
+
+	return tiles
+
+
 func make_player(name, id, color):
 	var player = Player.new()
-	player.player_name = name
-	player.player_id = id
-	player.color = color
+	player.init(name, id, color)
 	add_child(player)
 	players.append(player)
+
+
+func make_ai(name, id, color):
+	"""Create an AI agent that can perform actions"""
+	var actor = Actor.new()
+	actor.init(name, id, color)
+	add_child(actor)
+	players.append(actor)
 
 
 func check_game_end():
@@ -270,7 +289,7 @@ func _unhandled_input(event):
 		# Only spread influence or build if the tile is neighbor of controlled tile
 		var cell = ground_tilemap.get_cell_from_world_loc(position)
 		if ground_tilemap.cell_is_neighbor_of(
-			cell, self.get_controlled_tiles_for_player(self.players[0])
+			cell, self.get_controlled_cells_for_player(self.players[0])
 		):
 			self.build_building(self.players[0], position, BuildingManager.BuildingType.Mine)
 			self.spread_influence(self.players[0], position)
